@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://bbvsjj64bso8s"]
+[gd_scene load_steps=3 format=3 uid="uid://bbvsjj64bso8s"]
 
 [ext_resource type="PackedScene" uid="uid://tcudgpnsrtsu" path="res://Player/Scenes/player.tscn" id="1_lq4et"]
+[ext_resource type="PackedScene" uid="uid://b7qh051psbetj" path="res://Scenes/Levels/GrassLevel.tscn" id="2_siu27"]
 
 [node name="Testing" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_lq4et")]
-position = Vector2(246, 137)
+position = Vector2(240, 135)
+
+[node name="GrassLevel" parent="." instance=ExtResource("2_siu27")]

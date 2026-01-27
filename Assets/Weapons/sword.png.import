@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8bjn5bmrekiu"
-path="res://.godot/imported/Grass-01.png-5fc76e6808d349f0b07f23a79dfd9ff4.ctex"
+uid="uid://c2x0sl7s5la0i"
+path="res://.godot/imported/sword.png-2db82c165a62201dd859c752fc7b6359.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Maps/Grass-01.png"
-dest_files=["res://.godot/imported/Grass-01.png-5fc76e6808d349f0b07f23a79dfd9ff4.ctex"]
+source_file="res://Assets/Weapons/sword.png"
+dest_files=["res://.godot/imported/sword.png-2db82c165a62201dd859c752fc7b6359.ctex"]
 
 [params]
 

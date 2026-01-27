@@ -20,8 +20,10 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	
-	direction.x = Input.get_action_strength("moveRight") - Input.get_action_strength("moveLeft")
-	direction.y = Input.get_action_strength("moveDown") - Input.get_action_strength("moveUp")
+	#direction.x = Input.get_action_strength("moveRight") - Input.get_action_strength("moveLeft")
+	#direction.y = Input.get_action_strength("moveDown") - Input.get_action_strength("moveUp")
+	
+	direction = Vector2(Input.get_axis("moveLeft", "moveRight"), Input.get_axis("moveUp", "moveDown")).normalized()
 	
 	pass
 
