@@ -15,6 +15,10 @@ run/main_scene="uid://bbvsjj64bso8s"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GlobalHitstop="*res://Scripts/global_hitstop.gd"
+
 [display]
 
 window/size/viewport_width=480
@@ -63,6 +67,8 @@ attack={
 [layer_names]
 
 2d_physics/layer_1="Player"
+2d_physics/layer_2="Weapon"
+2d_physics/layer_3="Enemies"
 2d_physics/layer_5="Walls"
 
 [rendering]

@@ -1,12 +1,17 @@
 class_name Player extends CharacterBody2D
 
 
-var cardinal_direction : Vector2 = Vector2.DOWN
-var direction : Vector2 = Vector2.ZERO
+var cardinal_direction := Vector2.DOWN
+var direction := Vector2.ZERO
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var state_machine: PlayerStateMachine = $StateMachine
+
+var can_slash : bool = true
+@export var slash_time : float = 0.2
+@export var weapon_damage : float = 1.0
+@export var sword_scene: PackedScene
 
 
 # Called when the node enters the scene tree for the first time.
@@ -67,3 +72,17 @@ func AnimDirection() -> String:
 		return "up"
 	else:
 		return "side"
+
+
+func get_sword_offset(dir: Vector2) -> Vector2:
+	match dir:
+		Vector2.UP:
+			return Vector2(0, -2)
+		Vector2.DOWN:
+			return Vector2(0, 3)
+		Vector2.LEFT:
+			return Vector2(0, 4)
+		Vector2.RIGHT:
+			return Vector2(0, 4)
+	
+	return Vector2.ZERO

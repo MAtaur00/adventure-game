@@ -9,6 +9,7 @@ var attacking : bool = false
 
 func Enter() -> void:
 	player.UpdateAnimation("attack")
+	spawn_sword()
 	animation_player.animation_finished.connect(EndAttack)
 	attacking = true
 	pass
@@ -42,3 +43,11 @@ func HandleInput(_event : InputEvent) -> State:
 
 func EndAttack(_newAnimationName : String) -> void:
 	attacking = false
+
+
+func spawn_sword():
+	var sword = player.sword_scene.instantiate()
+	player.add_child(sword)
+	sword.position = player.get_sword_offset(player.cardinal_direction)
+	sword.set_draw_order(player.cardinal_direction)
+	sword.PlaySlash(player.cardinal_direction)
