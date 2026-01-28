@@ -23,7 +23,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	
 	#direction.x = Input.get_action_strength("moveRight") - Input.get_action_strength("moveLeft")
 	#direction.y = Input.get_action_strength("moveDown") - Input.get_action_strength("moveUp")
@@ -33,7 +33,7 @@ func _process(delta: float) -> void:
 	pass
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 
@@ -81,8 +81,8 @@ func get_sword_offset(dir: Vector2) -> Vector2:
 		Vector2.DOWN:
 			return Vector2(0, 3)
 		Vector2.LEFT:
-			return Vector2(0, 4)
+			return Vector2(0, 7)
 		Vector2.RIGHT:
-			return Vector2(0, 4)
+			return Vector2(0, 7)
 	
 	return Vector2.ZERO

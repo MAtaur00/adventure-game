@@ -12,4 +12,4 @@ position = Vector2(240, 135)
 [node name="GrassLevel" parent="." instance=ExtResource("2_siu27")]
 
 [node name="GreenApple" parent="." instance=ExtResource("3_sx6hp")]
-position = Vector2(133, 132)
+position = Vector2(84, 69)

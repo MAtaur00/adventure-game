@@ -190,7 +190,7 @@ _data = {
 &"walk_up": SubResource("Animation_qo0kk")
 }
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_mask = 16
 motion_mode = 1
 wall_min_slide_angle = 0.17453292
