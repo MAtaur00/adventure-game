@@ -50,7 +50,14 @@ func _on_body_entered(body: Node2D) -> void:
 	if body in hit_bodies:
 		return
 	
-	if body.has_method("take_damage"):
-		body.take_damage(sword_damage, attack_direction)
+	if body is Enemy:
+		print("hit!")
+		var hit_dir = (body.global_position - global_position).normalized()
+		body.health.take_damage(sword_damage, hit_dir)
 		hit_bodies[body] = true
 	pass # Replace with function body.
+
+
+func deal_damage(enemy: Enemy, damage: float, hit_dir: Vector2):
+	enemy.health.take_damage(damage, hit_dir)
+	enemy.apply_knockback(hit_dir)
