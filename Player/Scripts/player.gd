@@ -13,6 +13,8 @@ var can_slash : bool = true
 @export var weapon_damage : float = 1.0
 @export var sword_scene: PackedScene
 
+var knockback_velocity: Vector2 = Vector2.ZERO
+var knockback_decay: float = 500.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -23,12 +25,16 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	
-	#direction.x = Input.get_action_strength("moveRight") - Input.get_action_strength("moveLeft")
-	#direction.y = Input.get_action_strength("moveDown") - Input.get_action_strength("moveUp")
-	
+func _process(delta: float) -> void:
+	# Regular movement
 	direction = Vector2(Input.get_axis("moveLeft", "moveRight"), Input.get_axis("moveUp", "moveDown")).normalized()
+	
+	# Apply knockback
+	velocity = direction + knockback_velocity
+	move_and_slide()
+
+	# Decay knockback
+	knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, knockback_decay * delta)
 	
 	pass
 
@@ -86,3 +92,6 @@ func get_sword_offset(dir: Vector2) -> Vector2:
 			return Vector2(0, 7)
 	
 	return Vector2.ZERO
+
+func apply_knockback(direction: Vector2, strength: float) -> void:
+	knockback_velocity = direction.normalized() * strength

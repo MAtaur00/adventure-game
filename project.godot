@@ -70,6 +70,7 @@ attack={
 2d_physics/layer_2="Weapon"
 2d_physics/layer_3="Enemies"
 2d_physics/layer_5="Walls"
+2d_physics/layer_8="empty"
 
 [rendering]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bhl7njnuyp2ym"]
+[gd_scene load_steps=20 format=3 uid="uid://bhl7njnuyp2ym"]
 
 [ext_resource type="Texture2D" uid="uid://d4k1uo2op8thi" path="res://Assets/Enemies/green_apple_sheet.png" id="1_0sgfn"]
 [ext_resource type="Script" uid="uid://c1pu7rnjmmjue" path="res://Scripts/Enemies/GreenApple/green_apple.gd" id="1_reelf"]
@@ -152,6 +152,9 @@ size = Vector2(14, 16)
 [sub_resource type="CircleShape2D" id="CircleShape2D_fvlup"]
 radius = 80.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oqrug"]
+size = Vector2(14, 12)
+
 [node name="GreenApple" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 4
 collision_mask = 2
@@ -188,6 +191,13 @@ script = ExtResource("6_5x4mb")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("4_oqrug")
+
+[node name="DamageHitbox" type="Area2D" parent="."]
+collision_layer = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageHitbox"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_oqrug")
 
 [connection signal="body_entered" from="AggroArea" to="." method="_on_aggro_area_body_entered"]
 [connection signal="body_exited" from="AggroArea" to="." method="_on_aggro_area_body_exited"]

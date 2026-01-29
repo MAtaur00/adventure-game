@@ -17,12 +17,12 @@ func _ready() -> void:
 		push_warning("EnemyStateMachine has no initial state path assigned.")
 		return
 
-	var initial_state = get_node_or_null(initial_state)
-	if initial_state == null or not (initial_state is EnemyState):
+	var first_state = get_node_or_null(initial_state)
+	if first_state == null or not (first_state is EnemyState):
 		push_error("Initial state path does not point to an EnemyState.")
 		return
 
-	change_state(initial_state)
+	change_state(first_state)
 
 func change_state(new_state: EnemyState) -> void:
 	if current_state == new_state:

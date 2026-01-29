@@ -51,10 +51,10 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	
 	if body is Enemy:
-		print("hit!")
 		var hit_dir = (body.global_position - global_position).normalized()
 		body.health.take_damage(sword_damage, hit_dir)
 		hit_bodies[body] = true
+	
 	pass # Replace with function body.
 
 

@@ -7,6 +7,9 @@ class_name Enemy extends CharacterBody2D
 @export var knockback_decay : float = 300.0
 @export var hitstop_duration : float = 0.1
 
+@onready var damage_hitbox: Area2D = $DamageHitbox
+
+
 # --------------------
 # MOVEMENT
 # --------------------
@@ -37,6 +40,7 @@ var frozen := false
 # LIFECYCLE
 # --------------------
 func _ready() -> void:
+	damage_hitbox.body_entered.connect(_on_damage_hitbox_body_entered)
 	spawn_position = global_position
 	health.damaged.connect(_on_damaged)
 	health.died.connect(_on_died)
@@ -50,7 +54,9 @@ func _physics_process(delta: float) -> void:
 	enemy_state_machine.physics_update(delta)
 
 	# --- Combine movement + knockback for physics ---
-	velocity = move_velocity + knockback_velocity
+	if knockback_velocity.length() > 1:
+		velocity = knockback_velocity
+	else: velocity = move_velocity + knockback_velocity
 	move_and_slide()
 
 	# --- Decay knockback ---
@@ -82,7 +88,7 @@ func _on_aggro_area_body_exited(body: Node2D) -> void:
 		wander.returning_to_spawn = true
 		enemy_state_machine.change_state(wander)
 
-func _on_damaged(damage: float, hit_direction: Vector2 = Vector2.ZERO) -> void:
+func _on_damaged(_damage: float, hit_direction: Vector2 = Vector2.ZERO) -> void:
 	flash_white(0.05)
 	apply_knockback(hit_direction)
 	await GlobalHitstop.hitstop(hitstop_duration)
@@ -121,7 +127,7 @@ func get_direction_from_velocity(enemy_velocity: Vector2) -> String:
 func update_animation(enemy_velocity: Vector2) -> void:
 	# Decide direction
 	if enemy_velocity.length() > 0.1:
-		facing_direction = enemy_velocity.normalized()
+		facing_direction = move_velocity.normalized()
 
 	# Determine which animation to play based on facing_direction
 	var dir_str = ""
@@ -151,3 +157,17 @@ func update_animation(enemy_velocity: Vector2) -> void:
 		$Sprite2D.flip_h = facing_direction.x < 0
 	else:
 		$Sprite2D.flip_h = false
+
+func _on_damage_hitbox_body_entered(body: Node2D) -> void:
+	if not body.is_in_group("player"):
+		return
+
+	# Compute knockback direction
+	var direction_to_player = (body.global_position - global_position).normalized()
+
+	# Knockback the player
+	if body.has_method("apply_knockback"):
+		body.apply_knockback(direction_to_player, 150)  # strength in pixels/sec
+
+	# Knockback the enemy itself slightly
+	apply_knockback(-direction_to_player * 0.5)  # small recoil
