@@ -224,5 +224,3 @@ script = ExtResource("5_bw35f")
 
 [node name="Attack" type="Node" parent="StateMachine"]
 script = ExtResource("6_xwb2w")
-
-[node name="Camera2D" type="Camera2D" parent="."]

@@ -18,7 +18,7 @@ func _process(_delta: float) -> void:
 	pass
 
 
-func PlaySlash(direction : Vector2) -> void:
+func play_slash(direction : Vector2) -> void:
 	attack_direction = direction
 	match direction:
 		Vector2.UP:

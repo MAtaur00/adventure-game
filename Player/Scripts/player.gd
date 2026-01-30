@@ -8,6 +8,10 @@ var direction := Vector2.ZERO
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var state_machine: PlayerStateMachine = $StateMachine
 
+var input_locked := false
+var movement_locked := false
+var actions_locked := false
+
 var can_slash : bool = true
 @export var slash_time : float = 0.2
 @export var weapon_damage : float = 1.0
@@ -18,6 +22,18 @@ var knockback_decay: float = 500.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
+	var camera := get_viewport().get_camera_2d()
+	
+	camera.pan_started.connect(func():
+		input_locked = true
+		movement_locked = true
+		actions_locked = true)
+	
+	camera.pan_finished.connect(func():
+		input_locked = false
+		movement_locked = false
+		actions_locked = false)
 	
 	state_machine.Initialize(self)
 	
@@ -40,10 +56,16 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	if input_locked:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		update_animation("idle")
+		return
+	
 	move_and_slide()
 
 
-func SetDirection() -> bool:
+func set_direction() -> bool:
 	
 	var new_direction : Vector2 = cardinal_direction
 	if direction == Vector2.ZERO:
@@ -63,14 +85,14 @@ func SetDirection() -> bool:
 	return true
 
 
-func UpdateAnimation(state : String) -> void:
+func update_animation(state : String) -> void:
 	
-	animation_player.play(state + "_" + AnimDirection())
+	animation_player.play(state + "_" + anim_direction())
 	
 	pass
 
 
-func AnimDirection() -> String:
+func anim_direction() -> String:
 	
 	if cardinal_direction == Vector2.DOWN:
 		return "down"

@@ -5,7 +5,7 @@ class_name State_Idle extends State
 
 
 func Enter() -> void:
-	player.UpdateAnimation("idle")
+	player.update_animation("idle")
 	pass
 
 
@@ -26,6 +26,9 @@ func Physics(_delta : float) -> State:
 
 
 func HandleInput(_event : InputEvent) -> State:
+	
+	if player.actions_locked:
+		return null
 	
 	if _event.is_action_pressed("attack"):
 		return attack
