@@ -23,6 +23,10 @@ class_name Enemy extends CharacterBody2D
 @onready var return_to_spawn: ReturnToSpawnState = $EnemyStateMachine/ReturnToSpawn
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
+
+@onready var drop_component: DropComponent = $DropComponent
+
+
 # States write to this. base_enemy.gd is the only script that touches `velocity`
 var move_velocity: Vector2 = Vector2.ZERO
 
@@ -90,12 +94,17 @@ func _on_aggro_area_area_exited(area: Area2D) -> void:
 	if area.is_in_group("player_hurtbox"):
 		enemy_state_machine.change_state(return_to_spawn)
 
+# --------------------
+# COMBAT SIGNALS
+# --------------------
 func _on_damaged(_damage: float, hit_direction: Vector2 = Vector2.ZERO) -> void:
 	flash_white(0.05)
 	apply_knockback(hit_direction)
 	await GlobalHitstop.hitstop(hitstop_duration)
 
 func _on_died() -> void:
+	if has_node("DropComponent"):
+		drop_component.drop()
 	queue_free()
 
 

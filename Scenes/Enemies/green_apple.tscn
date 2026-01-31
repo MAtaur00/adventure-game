@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bhl7njnuyp2ym"]
+[gd_scene load_steps=23 format=3 uid="uid://bhl7njnuyp2ym"]
 
 [ext_resource type="Texture2D" uid="uid://d4k1uo2op8thi" path="res://Assets/Enemies/green_apple_sheet.png" id="1_0sgfn"]
 [ext_resource type="Script" uid="uid://c1pu7rnjmmjue" path="res://Scripts/Enemies/GreenApple/green_apple.gd" id="1_reelf"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" uid="uid://baj1i6b6dujpi" path="res://Scripts/Enemies/wander.gd" id="5_5x4mb"]
 [ext_resource type="Script" uid="uid://cfu05dwo0nd5l" path="res://Scripts/Enemies/aggro.gd" id="6_5x4mb"]
 [ext_resource type="Script" uid="uid://cm0rpatut0byg" path="res://Scripts/Enemies/return_to_spawn.gd" id="7_gwvmk"]
+[ext_resource type="Script" uid="uid://bsvprqbbypjts" path="res://Scripts/Collectibles/drop_component.gd" id="9_twaa7"]
+[ext_resource type="PackedScene" uid="uid://boy5picrdqlcs" path="res://Scenes/Collectibles/coin.tscn" id="10_dxvd3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gpsjf"]
 shader = ExtResource("2_fvlup")
@@ -206,6 +208,10 @@ collision_layer = 128
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageHitbox"]
 position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_oqrug")
+
+[node name="DropComponent" type="Node" parent="."]
+script = ExtResource("9_twaa7")
+coin_scene = ExtResource("10_dxvd3")
 
 [connection signal="area_entered" from="AggroArea" to="." method="_on_aggro_area_area_entered"]
 [connection signal="area_exited" from="AggroArea" to="." method="_on_aggro_area_area_exited"]

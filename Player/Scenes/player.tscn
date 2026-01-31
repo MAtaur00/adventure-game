@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://tcudgpnsrtsu"]
+[gd_scene load_steps=23 format=3 uid="uid://tcudgpnsrtsu"]
 
 [ext_resource type="Script" uid="uid://1dvlp7x06sj4" path="res://Player/Scripts/player.gd" id="1_rg7kn"]
 [ext_resource type="Texture2D" uid="uid://clg2b71x4euv3" path="res://Player/Assets/soldier_animations_full_sheet.png" id="2_bw35f"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://cyhrhx8wbsr0i" path="res://Player/Scripts/state_walk.gd" id="5_bw35f"]
 [ext_resource type="Script" uid="uid://d21gicqx6fvx8" path="res://Player/Scripts/state_attack.gd" id="6_xwb2w"]
 [ext_resource type="PackedScene" uid="uid://b51da14ricx3i" path="res://Scenes/Misc/health_component.tscn" id="8_2hb64"]
+[ext_resource type="Script" uid="uid://ces2m2j052rew" path="res://Scripts/inventory_component.gd" id="9_qsune"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qo0kk"]
 size = Vector2(14, 11.363608)
@@ -200,10 +201,6 @@ collision_mask = 16
 motion_mode = 1
 wall_min_slide_angle = 0.17453292
 script = ExtResource("1_rg7kn")
-max_health = null
-invincibility_time = null
-slash_time = null
-weapon_damage = null
 sword_scene = ExtResource("2_qo0kk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -244,5 +241,8 @@ script = ExtResource("6_xwb2w")
 [node name="InvincibilityTimer" type="Timer" parent="."]
 
 [node name="HealthComponent" parent="." instance=ExtResource("8_2hb64")]
+
+[node name="InventoryComponent" type="Node" parent="."]
+script = ExtResource("9_qsune")
 
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]

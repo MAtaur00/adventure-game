@@ -81,7 +81,6 @@ func _ensure_heart_slots(count: int) -> void:
 		heart.texture = empty_heart
 		
 		add_child(heart)
-		print("Added heart: ", get_child_count())
 	
 	# Remove extra hearts if any
 	while get_child_count() > count:

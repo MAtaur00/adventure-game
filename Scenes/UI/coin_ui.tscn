@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://eewv8u5p6eli"]
+
+[ext_resource type="Script" uid="uid://ns3bwn7ysghl" path="res://Scripts/UI/coin_ui.gd" id="1_h6tfv"]
+[ext_resource type="FontFile" uid="uid://de7lh2be6ct14" path="res://Assets/UI/Retro Gaming.ttf" id="2_3rx6r"]
+[ext_resource type="Texture2D" uid="uid://dmyegybnaxraj" path="res://Assets/UI/atlas.png" id="2_kmdxi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g37ak"]
+atlas = ExtResource("2_kmdxi")
+region = Rect2(96, 0, 8, 8)
+
+[node name="CoinUI" type="CanvasLayer" groups=["CoinUI"]]
+script = ExtResource("1_h6tfv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_top = 30.0
+offset_right = 40.0
+offset_bottom = 70.0
+alignment = 1
+
+[node name="CoinIcon" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_g37ak")
+stretch_mode = 3
+
+[node name="CoinAmount" type="Label" parent="VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_3rx6r")
+theme_override_font_sizes/font_size = 11
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1

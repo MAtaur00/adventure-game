@@ -30,8 +30,15 @@ var can_slash : bool = true
 @export var weapon_damage : float = 1.0
 @export var sword_scene: PackedScene
 
+@onready var inventory: InventoryComponent = $InventoryComponent
+
 var knockback_velocity: Vector2 = Vector2.ZERO
 var knockback_decay: float = 500.0
+
+
+var coins: int = 0
+@onready var coin_ui: CoinUI = get_tree().get_first_node_in_group("CoinUI") as CoinUI
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -185,3 +192,9 @@ func _on_damaged(_amount: int) -> void:
 
 func _on_died() -> void:
 	die()
+
+func add_coins(amount: int) -> void:
+	coins += amount
+	if coin_ui:
+		coin_ui.set_coins(coins)
+	inventory.add_coins(amount)
