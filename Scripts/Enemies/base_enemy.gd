@@ -9,6 +9,7 @@ class_name Enemy extends CharacterBody2D
 
 @onready var damage_hitbox: Area2D = $DamageHitbox
 
+@export var damage_dealt : int = 1
 
 # --------------------
 # MOVEMENT
@@ -19,9 +20,12 @@ class_name Enemy extends CharacterBody2D
 @onready var health: HealthComponent = $HealthComponent
 @onready var wander: WanderState = $EnemyStateMachine/Wander
 @onready var aggro: AggroState = $EnemyStateMachine/Aggro
+@onready var return_to_spawn: ReturnToSpawnState = $EnemyStateMachine/ReturnToSpawn
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
+# States write to this. base_enemy.gd is the only script that touches `velocity`
 var move_velocity: Vector2 = Vector2.ZERO
+
 var last_move_direction: Vector2 = Vector2.DOWN
 var facing_direction: Vector2 = Vector2.RIGHT
 
@@ -40,7 +44,6 @@ var frozen := false
 # LIFECYCLE
 # --------------------
 func _ready() -> void:
-	damage_hitbox.body_entered.connect(_on_damage_hitbox_body_entered)
 	spawn_position = global_position
 	health.damaged.connect(_on_damaged)
 	health.died.connect(_on_died)
@@ -79,14 +82,13 @@ func flash_white(duration: float = 0.05) -> void:
 # --------------------
 # AGGRO SIGNALS
 # --------------------
-func _on_aggro_area_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):
+func _on_aggro_area_area_entered(area: Area2D) -> void:
+	if area.is_in_group("player_hurtbox"):
 		enemy_state_machine.change_state(aggro)
 
-func _on_aggro_area_body_exited(body: Node2D) -> void:
-	if body.is_in_group("player"):
-		wander.returning_to_spawn = true
-		enemy_state_machine.change_state(wander)
+func _on_aggro_area_area_exited(area: Area2D) -> void:
+	if area.is_in_group("player_hurtbox"):
+		enemy_state_machine.change_state(return_to_spawn)
 
 func _on_damaged(_damage: float, hit_direction: Vector2 = Vector2.ZERO) -> void:
 	flash_white(0.05)
@@ -158,16 +160,23 @@ func update_animation(enemy_velocity: Vector2) -> void:
 	else:
 		$Sprite2D.flip_h = false
 
-func _on_damage_hitbox_body_entered(body: Node2D) -> void:
-	if not body.is_in_group("player"):
+func _on_damage_hitbox_area_entered(area: Area2D) -> void:
+	if not area.is_in_group("player_hurtbox"):
 		return
-
+	
+	var player = area.get_parent()
+	if player == null:
+		return
+	
+	if player.has_method("take_damage"):
+		player.take_damage(damage_dealt)
+	
 	# Compute knockback direction
-	var direction_to_player = (body.global_position - global_position).normalized()
+	var direction_to_player = (player.global_position - global_position).normalized()
 
 	# Knockback the player
-	if body.has_method("apply_knockback"):
-		body.apply_knockback(direction_to_player, 150)  # strength in pixels/sec
+	if player.has_method("apply_knockback"):
+		player.apply_knockback(direction_to_player, 120)  # strength in pixels/sec
 
 	# Knockback the enemy itself slightly
 	apply_knockback(-direction_to_player * 0.5)  # small recoil

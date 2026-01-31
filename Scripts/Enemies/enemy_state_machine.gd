@@ -32,7 +32,8 @@ func change_state(new_state: EnemyState) -> void:
 		current_state.exit()
 
 	current_state = new_state
-	current_state.enter()
+	if current_state:
+		current_state.enter()
 
 func physics_update(delta: float) -> void:
 	if current_state:

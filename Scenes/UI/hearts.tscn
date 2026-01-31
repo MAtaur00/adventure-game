@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bg61yg5co54bi"]
+
+[ext_resource type="Script" uid="uid://cegfxiix1uxpk" path="res://Scripts/UI/hearts.gd" id="1_4g7fm"]
+[ext_resource type="Texture2D" uid="uid://dc1ep38dj2mo5" path="res://Assets/UI/heart_full.tres" id="2_t3ras"]
+[ext_resource type="Texture2D" uid="uid://bt53vdhtl0hpd" path="res://Assets/UI/heart_half.tres" id="3_cq1s2"]
+[ext_resource type="Texture2D" uid="uid://bvibdsy2x5y12" path="res://Assets/UI/heart_empty.tres" id="4_lkt5m"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 48.0
+offset_bottom = 48.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Hearts" type="HBoxContainer" parent="Root" groups=["hearts_ui"]]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4g7fm")
+full_heart = ExtResource("2_t3ras")
+half_heart = ExtResource("3_cq1s2")
+empty_heart = ExtResource("4_lkt5m")

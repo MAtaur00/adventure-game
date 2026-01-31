@@ -4,6 +4,19 @@ class_name Player extends CharacterBody2D
 var cardinal_direction := Vector2.DOWN
 var direction := Vector2.ZERO
 
+@export var invincibility_time :float = 1.0
+var is_invincible: bool = false
+
+var respawn_point
+
+@onready var invincibility_timer: Timer = $InvincibilityTimer
+
+@onready var hurtbox: Area2D = $Hurtbox
+
+
+@onready var hearts_ui = get_tree().get_first_node_in_group("hearts_ui")
+@onready var health: PlayerHealthComponent = $HealthComponent
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var state_machine: PlayerStateMachine = $StateMachine
@@ -22,8 +35,13 @@ var knockback_decay: float = 500.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
+	add_to_group("player")
 	var camera := get_viewport().get_camera_2d()
+	
+	health.damaged.connect(_on_damaged)
+	health.died.connect(_on_died)
+	
+	respawn_point = global_position
 	
 	camera.pan_started.connect(func():
 		input_locked = true
@@ -42,6 +60,13 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	
+	if is_invincible:
+		var t = int(Time.get_ticks_msec() / 100) % 2
+		$Sprite2D.visible = t == 0
+	else:
+		$Sprite2D.visible = true
+	
 	# Regular movement
 	direction = Vector2(Input.get_axis("moveLeft", "moveRight"), Input.get_axis("moveUp", "moveDown")).normalized()
 	
@@ -115,5 +140,48 @@ func get_sword_offset(dir: Vector2) -> Vector2:
 	
 	return Vector2.ZERO
 
-func apply_knockback(direction: Vector2, strength: float) -> void:
-	knockback_velocity = direction.normalized() * strength
+func apply_knockback(knock_direction: Vector2, strength: float) -> void:
+	knockback_velocity = knock_direction.normalized() * strength
+
+func take_damage(amount: int):
+	if is_invincible:
+		return
+	
+	health.take_damage(amount)
+	
+	start_invincibility()
+
+func _on_hurtbox_area_entered(area: Area2D):
+	if area.is_in_group("enemyHurtbox"):
+		var enemy = area.get_parent()
+		take_damage(enemy.damage)
+
+func start_invincibility():
+	is_invincible = true
+	hurtbox.monitoring = false
+	invincibility_timer.start()
+
+
+func _on_invincibility_timer_timeout() -> void:
+	is_invincible = false
+	hurtbox.monitoring = true
+
+
+func die():
+	set_physics_process(false)
+	#$Sprite2D.play("death")
+	await get_tree().create_timer(1.0).timeout
+	respawn()
+
+func respawn():
+	global_position = respawn_point
+	health.reset()
+	set_physics_process(true)
+
+
+func _on_damaged(_amount: int) -> void:
+	#flash_white()
+	pass
+
+func _on_died() -> void:
+	die()
