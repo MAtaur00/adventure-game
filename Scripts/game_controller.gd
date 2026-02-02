@@ -27,10 +27,6 @@ func _on_coins_changed(amount: int):
 	if coin_ui:
 		coin_ui.set_coins(amount)
 
-func _unhandled_input(event):
-	if event.is_action_pressed("pause"):
-		pause_menu.toggle_pause()
-
 func _on_player_died():
 	player.input_locked = true
 	player.movement_locked = true

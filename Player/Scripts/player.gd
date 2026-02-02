@@ -3,7 +3,7 @@ class_name Player extends CharacterBody2D
 
 var cardinal_direction := Vector2.DOWN
 var direction := Vector2.ZERO
-@export var move_speed := 80.0
+@export var move_speed := 90.0
 
 @export var invincibility_time :float = 1.0
 var is_invincible: bool = false
