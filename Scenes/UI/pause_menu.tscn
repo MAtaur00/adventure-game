@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwwjteum6c7hh"]
+
+[ext_resource type="Script" uid="uid://bue5knqkmyqqb" path="res://Scripts/UI/pause_menu.gd" id="1_rrvs5"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 2
+visible = false
+script = ExtResource("1_rrvs5")
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="InventoryUI" type="Control" parent="Panel"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CoinsLabel" type="Label" parent="Panel/InventoryUI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="ItemGrid" type="GridContainer" parent="Panel/InventoryUI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ResumeButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="QuitButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0

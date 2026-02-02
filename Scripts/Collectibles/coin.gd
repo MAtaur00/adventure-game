@@ -27,5 +27,5 @@ func _on_area_entered(area: Area2D) -> void:
 	if player == null:
 		return
 	else:
-		player.add_coins(value)
+		player.collect_coin(value)
 		queue_free()

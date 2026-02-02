@@ -8,6 +8,7 @@ var attacking : bool = false
 
 
 func Enter() -> void:
+	player.movement_locked = true
 	player.update_animation("attack")
 	spawn_sword()
 	animation_player.animation_finished.connect(EndAttack)
@@ -16,6 +17,7 @@ func Enter() -> void:
 
 
 func Exit() -> void:
+	player.movement_locked = false
 	animation_player.animation_finished.disconnect(EndAttack)
 	attacking = false
 	pass

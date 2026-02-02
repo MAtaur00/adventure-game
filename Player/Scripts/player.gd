@@ -3,16 +3,16 @@ class_name Player extends CharacterBody2D
 
 var cardinal_direction := Vector2.DOWN
 var direction := Vector2.ZERO
+@export var move_speed := 80.0
 
 @export var invincibility_time :float = 1.0
 var is_invincible: bool = false
-
 var respawn_point
 
 @onready var invincibility_timer: Timer = $InvincibilityTimer
 
 @onready var hurtbox: Area2D = $Hurtbox
-
+signal died
 
 @onready var hearts_ui = get_tree().get_first_node_in_group("hearts_ui")
 @onready var health: PlayerHealthComponent = $HealthComponent
@@ -30,14 +30,11 @@ var can_slash : bool = true
 @export var weapon_damage : float = 1.0
 @export var sword_scene: PackedScene
 
-@onready var inventory: InventoryComponent = $InventoryComponent
+@onready var game_controller: GameController = get_node("/root/Main/GameController")
+
 
 var knockback_velocity: Vector2 = Vector2.ZERO
 var knockback_decay: float = 500.0
-
-
-var coins: int = 0
-@onready var coin_ui: CoinUI = get_tree().get_first_node_in_group("CoinUI") as CoinUI
 
 
 # Called when the node enters the scene tree for the first time.
@@ -67,24 +64,25 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if input_locked:
+		sprite.visible = true
+		return
 	
 	if is_invincible:
 		var t = int(Time.get_ticks_msec() / 100) % 2
-		$Sprite2D.visible = t == 0
+		sprite.visible = t == 0
 	else:
-		$Sprite2D.visible = true
+		sprite.visible = true
 	
-	# Regular movement
 	direction = Vector2(Input.get_axis("moveLeft", "moveRight"), Input.get_axis("moveUp", "moveDown")).normalized()
 	
 	# Apply knockback
-	velocity = direction + knockback_velocity
-	move_and_slide()
-
+	velocity = direction * move_speed + knockback_velocity
+	if not movement_locked:
+		move_and_slide()
+	
 	# Decay knockback
 	knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, knockback_decay * delta)
-	
-	pass
 
 
 func _physics_process(_delta: float) -> void:
@@ -93,9 +91,6 @@ func _physics_process(_delta: float) -> void:
 		move_and_slide()
 		update_animation("idle")
 		return
-	
-	move_and_slide()
-
 
 func set_direction() -> bool:
 	
@@ -118,11 +113,8 @@ func set_direction() -> bool:
 
 
 func update_animation(state : String) -> void:
-	
 	animation_player.play(state + "_" + anim_direction())
-	
 	pass
-
 
 func anim_direction() -> String:
 	
@@ -173,28 +165,12 @@ func _on_invincibility_timer_timeout() -> void:
 	is_invincible = false
 	hurtbox.monitoring = true
 
-
-func die():
-	set_physics_process(false)
-	#$Sprite2D.play("death")
-	await get_tree().create_timer(1.0).timeout
-	respawn()
-
-func respawn():
-	global_position = respawn_point
-	health.reset()
-	set_physics_process(true)
-
-
 func _on_damaged(_amount: int) -> void:
 	#flash_white()
 	pass
 
 func _on_died() -> void:
-	die()
+	died.emit()
 
-func add_coins(amount: int) -> void:
-	coins += amount
-	if coin_ui:
-		coin_ui.set_coins(coins)
-	inventory.add_coins(amount)
+func collect_coin(amount: int):
+	game_controller.add_coins(amount)

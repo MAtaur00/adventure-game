@@ -1,13 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://bbvsjj64bso8s"]
+[gd_scene load_steps=10 format=3 uid="uid://bbvsjj64bso8s"]
 
+[ext_resource type="Script" uid="uid://bfh5cpmbdckfx" path="res://Scripts/game_controller.gd" id="1_a06pk"]
 [ext_resource type="PackedScene" uid="uid://tcudgpnsrtsu" path="res://Player/Scenes/player.tscn" id="1_lq4et"]
 [ext_resource type="Script" uid="uid://bdrvecvvo8tia" path="res://Player/Scripts/transition_camera.gd" id="2_4ppfb"]
+[ext_resource type="Script" uid="uid://ces2m2j052rew" path="res://Scripts/inventory_component.gd" id="2_a4ydb"]
 [ext_resource type="PackedScene" uid="uid://b7qh051psbetj" path="res://Scenes/Levels/GrassLevel.tscn" id="2_siu27"]
 [ext_resource type="PackedScene" uid="uid://bhl7njnuyp2ym" path="res://Scenes/Enemies/green_apple.tscn" id="3_sx6hp"]
 [ext_resource type="PackedScene" uid="uid://bg61yg5co54bi" path="res://Scenes/UI/hearts.tscn" id="5_8si1v"]
 [ext_resource type="PackedScene" uid="uid://eewv8u5p6eli" path="res://Scenes/UI/coin_ui.tscn" id="6_vdlfs"]
+[ext_resource type="PackedScene" uid="uid://cwwjteum6c7hh" path="res://Scenes/UI/pause_menu.tscn" id="7_irbir"]
 
-[node name="Testing" type="Node2D"]
+[node name="Main" type="Node2D"]
+
+[node name="GameController" type="Node" parent="."]
+script = ExtResource("1_a06pk")
+
+[node name="InventoryComponent" type="Node" parent="GameController"]
+script = ExtResource("2_a4ydb")
 
 [node name="Player" parent="." instance=ExtResource("1_lq4et")]
 position = Vector2(240, 136)
@@ -23,3 +32,6 @@ position = Vector2(84, 69)
 [node name="CanvasLayer" parent="." instance=ExtResource("5_8si1v")]
 
 [node name="CoinUI" parent="." instance=ExtResource("6_vdlfs")]
+
+[node name="PauseMenu" parent="." node_paths=PackedStringArray("inventory") instance=ExtResource("7_irbir")]
+inventory = NodePath("../GameController/InventoryComponent")
