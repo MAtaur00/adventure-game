@@ -358,6 +358,20 @@ grow_vertical = 2
 theme_override_constants/separation = 10
 alignment = 1
 
+[node name="SaveButton" type="Button" parent="SystemScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_8rf44")
+theme_override_font_sizes/font_size = 11
+text = "Save Game"
+
+[node name="LoadButton" type="Button" parent="SystemScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_8rf44")
+theme_override_font_sizes/font_size = 11
+text = "Load Game"
+
 [node name="MainMenuButton" type="Button" parent="SystemScreen/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -372,5 +386,7 @@ theme_override_fonts/font = ExtResource("2_8rf44")
 theme_override_font_sizes/font_size = 11
 text = "Quit"
 
+[connection signal="pressed" from="SystemScreen/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="SystemScreen/VBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
 [connection signal="pressed" from="SystemScreen/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="pressed" from="SystemScreen/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GlobalHitstop="*res://Scripts/global_hitstop.gd"
+SaveManager="*res://Scripts/save_manager.gd"
 
 [display]
 

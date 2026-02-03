@@ -29,8 +29,12 @@ script = ExtResource("4_xb4mg")
 [node name="GreenApple" parent="." instance=ExtResource("6_5qxwa")]
 position = Vector2(84, 69)
 
+[node name="GreenApple2" parent="." instance=ExtResource("6_5qxwa")]
+position = Vector2(402, 77)
+
 [node name="CanvasLayer" parent="." instance=ExtResource("7_xc4hf")]
 
 [node name="CoinUI" parent="." instance=ExtResource("8_6rnll")]
 
 [node name="PauseMenu" parent="." instance=ExtResource("9_enc0b")]
+visible = false

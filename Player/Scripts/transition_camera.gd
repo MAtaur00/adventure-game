@@ -17,8 +17,6 @@ func _ready() -> void:
 	cur_screen = (get_parent().global_position / SCREEN_SIZE).floor()
 	global_position = cur_screen * SCREEN_SIZE + SCREEN_SIZE * 0.5
 	initialized = true
-	
-	_update_screen(cur_screen)
 
 
 func _physics_process(delta):
@@ -50,6 +48,11 @@ func _update_screen( new_screen : Vector2 ):
 	
 	pan_tween.finished.connect(func(): pan_finished.emit())
 
+func snap_to_position(world_position: Vector2) -> void:
+	initialized = false
+	cur_screen = (world_position / SCREEN_SIZE).floor()
+	global_position = cur_screen * SCREEN_SIZE + SCREEN_SIZE * 0.5
+	initialized = true
 
 func _process(delta: float) -> void:
 	pass

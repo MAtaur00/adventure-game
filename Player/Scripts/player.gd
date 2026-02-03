@@ -32,7 +32,6 @@ var can_slash : bool = true
 
 @onready var game_controller: GameController = get_node("/root/Main/GameController")
 
-
 var knockback_velocity: Vector2 = Vector2.ZERO
 var knockback_decay: float = 500.0
 

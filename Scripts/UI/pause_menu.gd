@@ -100,3 +100,26 @@ func _on_main_menu_button_pressed() -> void:
 
 func _on_quit_button_pressed() -> void:
 	get_tree().quit()
+
+
+func _on_load_button_pressed() -> void:
+	await SaveManager.load_game()
+
+func load_game():
+	if not SaveManager.has_save():
+		return
+
+	var data = await SaveManager.load_game()
+
+	get_tree().paused = false
+	get_tree().change_scene_to_file(data.scene)
+
+	await get_tree().process_frame
+
+	var player = get_tree().current_scene.get_node("Player")
+	player.global_position = data.player_position
+	player.health = data.health
+
+
+func _on_save_button_pressed() -> void:
+	SaveManager._on_save_button_pressed()

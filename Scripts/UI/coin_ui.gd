@@ -5,8 +5,12 @@ class_name CoinUI extends CanvasLayer
 
 var coin_count: int = 0
 
+func _ready() -> void:
+	coin_label.text = str(coin_count)
+
 func set_coins(amount: int) -> void:
 	coin_count = amount
+	print(coin_count)
 	coin_label.text = str(coin_count)
 
 func add_coins(amount: int) -> void:

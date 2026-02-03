@@ -13,7 +13,6 @@ func _ready() -> void:
 		.set_trans(Tween.TRANS_BACK)\
 		.set_ease(Tween.EASE_OUT)
 	
-	# Make collision shape match sprite size
 	if $CollisionShape2D.shape is CircleShape2D:
 		$CollisionShape2D.shape.radius *= 0.5
 	
