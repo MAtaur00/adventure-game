@@ -10,7 +10,6 @@ func _ready() -> void:
 
 func set_coins(amount: int) -> void:
 	coin_count = amount
-	print(coin_count)
 	coin_label.text = str(coin_count)
 
 func add_coins(amount: int) -> void:

@@ -45,6 +45,8 @@ func load_game():
 	var player = get_tree().current_scene.get_node("Player")
 	var coinUI = get_tree().current_scene.get_node("CoinUI")
 	var camera = player.get_node("Camera2D")
+	var inventory_coins = get_tree().current_scene.get_node("GameController").get_node("InventoryComponent")
+	inventory_coins.coins = data.coins
 	player.global_position = data.player_position
 	player.health.current_health = data.health
 	coinUI.add_coins(data.coins)

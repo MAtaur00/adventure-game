@@ -22,7 +22,7 @@ class_name Enemy extends CharacterBody2D
 @onready var aggro: AggroState = $EnemyStateMachine/Aggro
 @onready var return_to_spawn: ReturnToSpawnState = $EnemyStateMachine/ReturnToSpawn
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-
+@onready var sprite: Sprite2D = $Sprite2D
 
 @onready var drop_component: DropComponent = $DropComponent
 
@@ -49,6 +49,11 @@ var frozen := false
 # --------------------
 func _ready() -> void:
 	spawn_position = global_position
+	
+	var mat := sprite.material
+	if mat != null:
+		sprite.material = mat.duplicate(true)
+	
 	health.damaged.connect(_on_damaged)
 	health.died.connect(_on_died)
 	add_to_group("enemy")
@@ -75,7 +80,7 @@ func _physics_process(delta: float) -> void:
 # HIT FLASH
 # --------------------
 func flash_white(duration: float = 0.05) -> void:
-	var mat = $Sprite2D.material
+	var mat = sprite.material
 	if mat == null:
 		return
 
@@ -165,9 +170,9 @@ func update_animation(enemy_velocity: Vector2) -> void:
 
 	# Flip side sprite if facing left
 	if dir_str == "side":
-		$Sprite2D.flip_h = facing_direction.x < 0
+		sprite.flip_h = facing_direction.x < 0
 	else:
-		$Sprite2D.flip_h = false
+		sprite.flip_h = false
 
 func _on_damage_hitbox_area_entered(area: Area2D) -> void:
 	if not area.is_in_group("player_hurtbox"):
