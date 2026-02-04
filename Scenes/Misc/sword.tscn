@@ -70,10 +70,10 @@ tracks/1/path = NodePath(".:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.14999999),
+"times": PackedFloat32Array(0, 0.15),
 "transitions": PackedFloat32Array(0.5, 1),
 "update": 0,
-"values": [Vector2(8, 8), Vector2(-8, 8)]
+"values": [Vector2(-8, 8), Vector2(8, 8)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -82,10 +82,10 @@ tracks/2/path = NodePath(".:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.14999999),
+"times": PackedFloat32Array(0, 0.15),
 "transitions": PackedFloat32Array(0.5, -2),
 "update": 0,
-"values": [1.5707964, 3.1415927]
+"values": [3.1415927, 1.5707964]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -235,10 +235,10 @@ tracks/1/path = NodePath(".:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.14999999),
+"times": PackedFloat32Array(0, 0.15),
 "transitions": PackedFloat32Array(0.5, 1),
 "update": 0,
-"values": [Vector2(-8.000001, -8), Vector2(8, -8)]
+"values": [Vector2(8, -8), Vector2(-8, -8)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -247,10 +247,10 @@ tracks/2/path = NodePath(".:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.14999999),
+"times": PackedFloat32Array(0, 0.15),
 "transitions": PackedFloat32Array(0.5, -2),
 "update": 0,
-"values": [-1.5707964, 0.0]
+"values": [0.0, -1.5707964]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
